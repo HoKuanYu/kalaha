@@ -1,7 +1,39 @@
-var firstPlayer = 6;
-var secondPlayer = 13;
-var beans = [];
-var computerTurn = true;
+var firstPlayer;
+var secondPlayer;
+var firstPlayerTitle;
+var secondPlayerTitle;
+var firstPlayerTurn;
+var secondPlayerTurn;
+var computerTurn;
+
+function HouseButtonActive() {
+	if (firstPlayerTurn) {
+		document.getElementById("title").innerHTML = "輪到" + firstPlayerTitle;
+		for (var i = firstPlayer - 6; i < firstPlayer; ++i) {
+			console.log(i);
+			if (document.getElementById("house" + i.toString()).innerHTML != 0)
+				document.getElementById("house" + i.toString()).disabled = false;
+			else
+				document.getElementById("house" + i.toString()).disabled = true;
+		}
+
+		for (var i = secondPlayer - 6; i < secondPlayer; ++i)
+			document.getElementById("house" + i.toString()).disabled = true;
+
+	}
+	else {
+		document.getElementById("title").innerHTML = "輪到" + secondPlayerTitle;
+		for (var i = firstPlayer - 6; i < firstPlayer; ++i) 
+			document.getElementById("house" + i.toString()).disabled = true;
+
+		for (var i = secondPlayer - 6; i < secondPlayer; ++i){
+			if (document.getElementById("house" + i.toString()).innerHTML != 0)
+				document.getElementById("house" + i.toString()).disabled = false;
+			else
+				document.getElementById("house" + i.toString()).disabled = true;
+		}
+	}
+}
 
 function HouseOnClick(pickedHouse) {
 	var house = [];
@@ -10,16 +42,18 @@ function HouseOnClick(pickedHouse) {
 		house[i] = parseInt(document.getElementById("house" + i.toString()).innerHTML);
 	}
 
-	if (computerTurn === false) {
-		var again = Relocation(house, pickedHouse);
+	var again = Relocation(house, pickedHouse);
 
-		for (var i = 0; i < 14; ++i) {
-			document.getElementById("house" + i.toString()).innerHTML = house[i];
-		}
+	for (var i = 0; i < 14; ++i) {
+		document.getElementById("house" + i.toString()).innerHTML = house[i];
 	}
-	else {
-		MinMaxDecision(house, 14);
+
+	if (again == false) {
+		firstPlayerTurn = !firstPlayerTurn;
+		secondPlayerTurn = !secondPlayerTurn;
 	}
+
+	HouseButtonActive();
 }
 
 function Relocation(house, pickedHouse) {
@@ -165,18 +199,32 @@ function Start() {
 	if (parseInt(document.getElementById("mode").value) === 0) {
 		firstPlayer = 6;
 		secondPlayer = 13;
+		firstPlayerTitle = document.getElementById("player1").value;
+		secondPlayerTitle = document.getElementById("player2").value;
+		firstPlayerTurn = true;
+		secondPlayerTurn = false;
 		computerTurn = false;
 	}
 	else if (parseInt(document.getElementById("mode").value.toString()) === 1) {
 		firstPlayer = 6;
 		secondPlayer = 13;
+		firstPlayerTitle = document.getElementById("player1").value;
+		secondPlayerTitle = "電腦";
+		firstPlayerTurn = true;
+		secondPlayerTurn = false;
 		computerTurn = true;
 	}
 	else if (parseInt(document.getElementById("mode").value.toString()) === 2) {
 		firstPlayer = 13;
 		secondPlayer = 6;
+		firstPlayerTitle = document.getElementById("player1").value;
+		secondPlayerTitle = "電腦";
+		firstPlayerTurn = false;
+		secondPlayerTurn = true;
 		computerTurn = true;
 	}
+
+	HouseButtonActive();
 
 	document.getElementById("gametable").style.display = "block";
 	document.getElementById("main").style.display = "none";
