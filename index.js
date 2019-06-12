@@ -1,13 +1,16 @@
-var firstPlayer;
-var secondPlayer;
+var firstPlayer = 6;
+var secondPlayer = 13;
 var firstPlayerTitle;
 var secondPlayerTitle;
 var firstPlayerTurn;
 var secondPlayerTurn;
-var computerTurn;
+var firstPlayerComputer;
+var secondPlayerComputer;
+var firstPlayerDepth;
+var secondPlayerDepth;
 
 function HouseButtonActive() {
-	if (firstPlayerTurn) {
+	if (firstPlayerTurn && !firstPlayerComputer) {
 		document.getElementById("title").innerHTML = "輪到" + firstPlayerTitle;
 		for (var i = firstPlayer - 6; i < firstPlayer; ++i) {
 			if (document.getElementById("house" + i.toString()).innerHTML != 0)
@@ -18,9 +21,23 @@ function HouseButtonActive() {
 
 		for (var i = secondPlayer - 6; i < secondPlayer; ++i)
 			document.getElementById("house" + i.toString()).disabled = true;
-
 	}
-	else if (secondPlayerTurn && !computerTurn) {
+	else if (firstPlayerTurn && firstPlayerComputer) {
+		console.log('first');
+		document.getElementById("title").innerHTML = "輪到" + firstPlayerTitle;
+
+		for (var i = 0; i < 14; ++i) {
+			if (i != 6 && i != 13)
+				document.getElementById("house" + i.toString()).disabled = true;
+		}
+
+		setTimeout(function() {
+			var action = MinMaxDecision(firstPlayerDepth, firstPlayer);
+			console.log(action);
+			HouseOnClick(action);
+		}, 100);
+	}
+	else if (secondPlayerTurn && !secondPlayerComputer) {
 		document.getElementById("title").innerHTML = "輪到" + secondPlayerTitle;
 		for (var i = firstPlayer - 6; i < firstPlayer; ++i) 
 			document.getElementById("house" + i.toString()).disabled = true;
@@ -41,7 +58,7 @@ function HouseButtonActive() {
 		}
 
 		setTimeout(function() {
-			var action = MinMaxDecision(parseInt(document.getElementById("depth").value));
+			var action = MinMaxDecision(secondPlayerDepth, secondPlayer);
 			HouseOnClick(action);
 		}, 100);
 	}
@@ -135,7 +152,7 @@ function Relocation(house, pickedHouse) {
 	return false;
 }
 
-function MinMaxDecision(depthMax) {
+function MinMaxDecision(depthMax, player) {
 	var alpha = -1000;
 	var beta = 1000;
 
@@ -145,7 +162,7 @@ function MinMaxDecision(depthMax) {
 		house[i] = parseInt(document.getElementById("house" + i.toString()).innerHTML);
 	}
 
-	return MaxValue(house, depthMax, 0, alpha, beta);
+	return MaxValue(house, depthMax, 0, alpha, beta, player);
 }
 
 function FinalScoring(house) {
@@ -156,8 +173,8 @@ function FinalScoring(house) {
 	}
 }
 
-function Evaluate(house) {
-	return house[secondPlayer] - house[firstPlayer];
+function Evaluate(house, player1, player2) {
+	return house[player1] - house[player2];
 }
 
 function HasSuccessors(house) {
@@ -174,17 +191,17 @@ function HasSuccessors(house) {
 	return player1 && player2;
 }
 
-function MaxValue(house, depthMax, depth, alpha, beta) {
+function MaxValue(house, depthMax, depth, alpha, beta, player) {
 	if (HasSuccessors(house) === false) {
 		FinalScoring(house);
-		return Evaluate(house);
+		return Evaluate(house, player, (player + 7) % 14);
 	}
 	else if (depth >= depthMax) {
-		return Evaluate(house);
+		return Evaluate(house, player, (player + 7) % 14);
 	}
 	else {
 		var action;
-		for (var i = secondPlayer - 6; i < secondPlayer; ++i) {
+		for (var i = player - 6; i < player; ++i) {
 			if (house[i] === 0)
 				continue;
 
@@ -193,9 +210,9 @@ function MaxValue(house, depthMax, depth, alpha, beta) {
 				tempHouse[j] = house[j];
 
 			if (Relocation(tempHouse, i))
-				tempValue = MaxValue(tempHouse, depthMax, depth + 2, alpha, beta);
+				tempValue = MaxValue(tempHouse, depthMax, depth + 2, alpha, beta, player);
 			else
-				tempValue = MinValue(tempHouse, depthMax, depth + 1, alpha, beta);
+				tempValue = MinValue(tempHouse, depthMax, depth + 1, alpha, beta, (player + 7) % 14);
 
 			if (alpha < tempValue) {
 				alpha = tempValue;
@@ -213,16 +230,16 @@ function MaxValue(house, depthMax, depth, alpha, beta) {
 	}
 }
 
-function MinValue(house, depthMax, depth, alpha, beta) {
+function MinValue(house, depthMax, depth, alpha, beta, player) {
 	if (HasSuccessors(house) === false) {
 		FinalScoring(house);
-		return Evaluate(house);
+		return Evaluate(house, (player + 7) % 14, player);
 	}
 	else if (depth >= depthMax) {
-		return Evaluate(house);
+		return Evaluate(house, (player + 7) % 14, player);
 	}
 	else {
-		for (var i = firstPlayer - 6; i < firstPlayer; ++i) {
+		for (var i = player - 6; i < player; ++i) {
 			if (house[i] === 0)
 				continue;
 
@@ -232,9 +249,9 @@ function MinValue(house, depthMax, depth, alpha, beta) {
 
 			
 			if (Relocation(tempHouse, i))
-				tempValue = MinValue(tempHouse, depthMax, depth + 2, alpha, beta);
+				tempValue = MinValue(tempHouse, depthMax, depth + 2, alpha, beta, player);
 			else
-				tempValue = MaxValue(tempHouse, depthMax, depth + 1, alpha, beta);
+				tempValue = MaxValue(tempHouse, depthMax, depth + 1, alpha, beta, (player + 7) % 14);
 
 			if (beta > tempValue)
 				beta = tempValue;
@@ -254,32 +271,30 @@ function Start() {
 			document.getElementById("house" + i.toString()).innerHTML = 0;
 	}
 
+	firstPlayerTurn = true;
+	secondPlayerTurn = false;
+	firstPlayerTitle = document.getElementById("player1").value;
+	secondPlayerTitle = document.getElementById("player2").value;
+
 	if (parseInt(document.getElementById("mode").value) === 0) {
-		firstPlayer = 6;
-		secondPlayer = 13;
-		firstPlayerTitle = document.getElementById("player1").value;
-		secondPlayerTitle = document.getElementById("player2").value;
-		firstPlayerTurn = true;
-		secondPlayerTurn = false;
-		computerTurn = false;
+		firstPlayerComputer = false;
+		secondPlayerComputer = false;
 	}
 	else if (parseInt(document.getElementById("mode").value.toString()) === 1) {
-		firstPlayer = 6;
-		secondPlayer = 13;
-		firstPlayerTitle = document.getElementById("player1").value;
-		secondPlayerTitle = "電腦";
-		firstPlayerTurn = true;
-		secondPlayerTurn = false;
-		computerTurn = true;
+		firstPlayerComputer = false;
+		secondPlayerComputer = true;
+		secondPlayerDepth = parseInt(document.getElementById("depth2").value);
 	}
 	else if (parseInt(document.getElementById("mode").value.toString()) === 2) {
-		firstPlayer = 13;
-		secondPlayer = 6;
-		firstPlayerTitle = document.getElementById("player1").value;
-		secondPlayerTitle = "電腦";
-		firstPlayerTurn = false;
-		secondPlayerTurn = true;
-		computerTurn = true;
+		firstPlayerComputer = true;
+		secondPlayerComputer = false;
+		firstPlayerDepth = parseInt(document.getElementById("depth1").value);
+	}
+	else {
+		firstPlayerComputer = true;
+		secondPlayerComputer = true;
+		firstPlayerDepth = document.getElementById("depth1").value;
+		secondPlayerDepth = parseInt(document.getElementById("depth2").value);
 	}
 	document.getElementById("gametable").style.display = "block";
 	document.getElementById("main").style.display = "none";
@@ -305,8 +320,20 @@ function Back() {
 }
 
 function modeSelectOnChange() {
-	if (document.getElementById("mode").value == 0)
-		document.getElementById("player2").disabled = false;
-	else
-		document.getElementById("player2").disabled = true;
+	if (document.getElementById("mode").value == 0) {
+		document.getElementById("depth1").disabled = true;
+		document.getElementById("depth2").disabled = true;
+	}
+	else if (document.getElementById("mode").value == 1) {
+		document.getElementById("depth1").disabled = true;
+		document.getElementById("depth2").disabled = false;
+	}
+	else if (document.getElementById("mode").value == 2) {
+		document.getElementById("depth1").disabled = false;
+		document.getElementById("depth2").disabled = true;
+	}
+	else {
+		document.getElementById("depth1").disabled = false;
+		document.getElementById("depth2").disabled = false;
+	}
 }

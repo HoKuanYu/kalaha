@@ -70,10 +70,11 @@
 									<label class="col-lg-4 col-form-label text-lg-right">模式 :</label>
 
 									<div class="col-lg-6 input-group">
-										<select id="mode" onChange="modeSelectOnChange()" class="col-lg-10" style="text-align-last: center;">
+										<select id="mode" onClick="modeSelectOnChange()" class="col-lg-10" style="text-align-last: center;">
 											<option value="0">玩家 vs 玩家</option>
 											<option value="1">玩家(先攻) vs 電腦(後攻)</option>
-											<option value="2">玩家(後攻) vs 電腦(先攻)</option>
+											<option value="2">電腦(先攻) vs 玩家(後攻)</option>
+											<option value="3">電腦 vs 電腦</option>
 										</select>
 									</div>
 								</div><br>
@@ -95,18 +96,26 @@
 								</div><br>
 
 								<div class="row">
-									<label class="col-lg-4 col-form-label text-lg-right">豆子數量(>0) :</label>
+									<label class="col-lg-4 col-form-label text-lg-right">深度1(>1) :</label>
 
 									<div class="col-lg-6 input-group">
-										<input id="seeds" class="col-lg-10" type="number" min="1" value="6" style="text-align-last: center;">
+										<input id="depth1" class="col-lg-10" type="number" min="1" value="8" style="text-align-last: center;" disabled="disabled">
 									</div>
 								</div><br>
 
 								<div class="row">
-									<label class="col-lg-4 col-form-label text-lg-right">深度(>1) :</label>
+									<label class="col-lg-4 col-form-label text-lg-right">深度2(>1) :</label>
 
 									<div class="col-lg-6 input-group">
-										<input id="depth" class="col-lg-10" type="number" min="1" value="8" style="text-align-last: center;">
+										<input id="depth2" class="col-lg-10" type="number" min="1" value="8" style="text-align-last: center;" disabled="disabled">
+									</div>
+								</div><br>
+
+								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">豆子數量(>0) :</label>
+
+									<div class="col-lg-6 input-group">
+										<input id="seeds" class="col-lg-10" type="number" min="1" value="6" style="text-align-last: center;">
 									</div>
 								</div><br>
 
