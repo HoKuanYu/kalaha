@@ -156,9 +156,19 @@ function MinValue(house, depthMax, depth, alpha, beta) {
 	}
 }
 
-function ShowTable() {
+function Start() {
+	for (var i = 0; i < 14; ++i) {
+		if (i != 6 && i != 13)
+			document.getElementById("house" + i.toString()).innerHTML = document.getElementById("seeds").value;
+	}
+
 	document.getElementById("gametable").style.display = "block";
 	document.getElementById("main").style.display = "none";
+}
+
+function Back() {
+	document.getElementById("gametable").style.display = "none";
+	document.getElementById("main").style.display = "block";
 }
 
 function Test2(x) {
