@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kalaha</title>
+	</head>
+	<script type="text/javascript" src="index.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<body>
+		<div id="app" class="fullHeight">
+			<div class="contaniner">
+				<br>
+				<div class="row justify-content-center">
+					<div class="col-md-6">
+						<dir class="card nopadding">
+							<div class="card-header" style="font-size: 200%;">Kalaha</div>
+							<div id="gametable" class="card-body" style="display: none;">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<th style="border-left-style: hidden; border-top-style: hidden;"></th>
+											<th>#12</th>
+											<th>#11</th>
+											<th>#10</th>
+											<th>#9</th>
+											<th>#8</th>
+											<th>#7</th>
+											<th style="border-right-style: hidden; border-top-style: hidden;"></th>
+										</tr>
+										<tr>
+											<td rowspan="2" id="house13" style="vertical-align: middle; font-size: 160%;">6</td>
+											<td id="house12">1</td>
+											<td id="house11">0</td>
+											<td id="house10">4</td>
+											<td id="house9">3</td>
+											<td id="house8">5</td>
+											<td id="house7">2</td>
+											<td rowspan="2" id="house6" style="vertical-align: middle; font-size: 160%;">4</td>
+										</tr>
+										<tr>
+											<td id="house0">7</td>
+											<td id="house1">11</td>
+											<td id="house2">4</td>
+											<td id="house3">6</td>
+											<td id="house4">10</td>
+											<td id="house5">9</td>
+										</tr>
+										<tr>
+											<th style="border-left-style: hidden; border-bottom-style: hidden;"></th>
+											<th>#0</th>
+											<th>#1</th>
+											<th>#2</th>
+											<th>#3</th>
+											<th>#4</th>
+											<th>#5</th>
+											<th style="border-right-style: hidden; border-bottom-style: hidden;"></th>
+										</tr>
+									</tbody>
+								</table><br>
+
+								<div class="row justify-content-center nopadding">
+									<button class="col-4 btn btn-outline-secondary" onclick="">back</button>
+								</div>
+							</div>
+
+							<div id="main" class="card-body">
+								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">模式 :</label>
+
+									<div class="col-lg-6 input-group">
+										<select id="mode" class="col-lg-10" style="text-align-last: center;">
+											<option value="0">玩家 vs 玩家</option>
+											<option value="1">玩家(先攻) vs 電腦(後攻)</option>
+											<option value="2">玩家(後攻) vs 電腦(先攻)</option>
+										</select>
+									</div>
+								</div><br>
+
+								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">豆子數量(>0) :</label>
+
+									<div class="col-lg-6 input-group">
+										<input id="seeds" class="col-lg-10" type="number" min="1" value="6" style="text-align-last: center;">
+									</div>
+								</div><br>
+
+								<div class="row justify-content-center nopadding">
+									<button class="col-4 btn btn-outline-secondary" onclick="ShowTable()">start</button>
+								</div>
+							</div>
+
+						<div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
