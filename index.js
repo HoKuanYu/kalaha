@@ -162,6 +162,22 @@ function Start() {
 			document.getElementById("house" + i.toString()).innerHTML = document.getElementById("seeds").value;
 	}
 
+	if (parseInt(document.getElementById("mode").value) === 0) {
+		firstPlayer = 6;
+		secondPlayer = 13;
+		computerTurn = false;
+	}
+	else if (parseInt(document.getElementById("mode").value.toString()) === 1) {
+		firstPlayer = 6;
+		secondPlayer = 13;
+		computerTurn = true;
+	}
+	else if (parseInt(document.getElementById("mode").value.toString()) === 2) {
+		firstPlayer = 13;
+		secondPlayer = 6;
+		computerTurn = true;
+	}
+
 	document.getElementById("gametable").style.display = "block";
 	document.getElementById("main").style.display = "none";
 }
@@ -169,6 +185,13 @@ function Start() {
 function Back() {
 	document.getElementById("gametable").style.display = "none";
 	document.getElementById("main").style.display = "block";
+}
+
+function modeSelectOnChange() {
+	if (document.getElementById("mode").value == 0)
+		document.getElementById("player2").disabled = false;
+	else
+		document.getElementById("player2").disabled = true;
 }
 
 function Test2(x) {

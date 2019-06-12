@@ -13,7 +13,7 @@
 				<div class="row justify-content-center">
 					<div class="col-md-6">
 						<dir class="card nopadding">
-							<div class="card-header" style="font-size: 200%;">Kalaha</div>
+							<div class="card-header" style="font-size: 200%; text-align-last: center;">Kalaha</div>
 							<div id="gametable" class="card-body" style="display: none;">
 								<table class="table table-bordered">
 									<tbody>
@@ -68,7 +68,7 @@
 									<label class="col-lg-4 col-form-label text-lg-right">模式 :</label>
 
 									<div class="col-lg-6 input-group">
-										<select id="mode" class="col-lg-10" style="text-align-last: center;">
+										<select id="mode" onChange="modeSelectOnChange()" class="col-lg-10" style="text-align-last: center;">
 											<option value="0">玩家 vs 玩家</option>
 											<option value="1">玩家(先攻) vs 電腦(後攻)</option>
 											<option value="2">玩家(後攻) vs 電腦(先攻)</option>
@@ -77,10 +77,34 @@
 								</div><br>
 
 								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">玩家1 :</label>
+
+									<div class="col-lg-6 input-group">
+										<input id="player1" class="col-lg-10" type="text" value="玩家1" style="text-align-last: center;">
+									</div>
+								</div><br>
+
+								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">玩家2 :</label>
+
+									<div class="col-lg-6 input-group">
+										<input id="player2" class="col-lg-10" type="text" value="玩家2" style="text-align-last: center;">
+									</div>
+								</div><br>
+
+								<div class="row">
 									<label class="col-lg-4 col-form-label text-lg-right">豆子數量(>0) :</label>
 
 									<div class="col-lg-6 input-group">
 										<input id="seeds" class="col-lg-10" type="number" min="1" value="6" style="text-align-last: center;">
+									</div>
+								</div><br>
+
+								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">深度(>1) :</label>
+
+									<div class="col-lg-6 input-group">
+										<input id="depth" class="col-lg-10" type="number" min="1" value="8" style="text-align-last: center;">
 									</div>
 								</div><br>
 
