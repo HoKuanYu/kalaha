@@ -35,7 +35,7 @@ function HouseButtonActive() {
 			var action = MinMaxDecision(firstPlayerDepth, firstPlayer);
 			console.log(action);
 			HouseOnClick(action);
-		}, 100);
+		}, 50);
 	}
 	else if (secondPlayerTurn && !secondPlayerComputer) {
 		document.getElementById("title").innerHTML = "輪到" + secondPlayerTitle;
@@ -60,7 +60,7 @@ function HouseButtonActive() {
 		setTimeout(function() {
 			var action = MinMaxDecision(secondPlayerDepth, secondPlayer);
 			HouseOnClick(action);
-		}, 100);
+		}, 50);
 	}
 }
 
