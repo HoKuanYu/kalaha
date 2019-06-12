@@ -48,16 +48,25 @@ function HouseButtonActive() {
 }
 
 function HouseOnClick(pickedHouse) {
+	if (firstPlayerTurn) {
+		document.getElementById("infobox").innerHTML += '<div class="row"><label class="col-lg-5 col-form-label text-lg-right">' + firstPlayerTitle + '選擇了 :</label>'
+											+ '<label class="col-lg-6 col-form-label">' + pickedHouse.toString() + '</label></div>';
+	}
+	else {
+		document.getElementById("infobox").innerHTML += '<div class="row"><label class="col-lg-5 col-form-label text-lg-right">' + secondPlayerTitle + '選擇了 :</label>'
+											+ '<label class="col-lg-6 col-form-label">' + pickedHouse.toString() + '</label></div>';
+	}
+
 	var house = [];
 
 	for (var i = 0; i < 14; ++i) {
 		house[i] = parseInt(document.getElementById("house" + i.toString()).innerHTML);
 	}
-	console.log(house);
-	console.log(pickedHouse);
 
 	var again = Relocation(house, pickedHouse);
-	console.log(house);
+
+	document.getElementById("infobox").innerHTML += '<div class="row"><label class="col-lg-5 col-form-label text-lg-right">現在狀態 :</label>'
+										+ '<label class="col-lg-6 col-form-label">[' + house.toString() + ']</label></div><br>';
 
 	for (var i = 0; i < 14; ++i) {
 		document.getElementById("house" + i.toString()).innerHTML = house[i];
@@ -70,6 +79,9 @@ function HouseOnClick(pickedHouse) {
 
 	if (HasSuccessors(house)) {
 		HouseButtonActive();
+
+		if (again == true)
+			document.getElementById("title").innerHTML += "(再玩一次)";
 	}
 	else {
 		FinalScoring(house);
@@ -272,11 +284,23 @@ function Start() {
 	document.getElementById("gametable").style.display = "block";
 	document.getElementById("main").style.display = "none";
 
+	var house = [];
+
+	for (var i = 0; i < 14; ++i) {
+		house[i] = parseInt(document.getElementById("house" + i.toString()).innerHTML);
+	}
+
+	document.getElementById("info").style.display = "block";
+
+	document.getElementById("infobox").innerHTML = '<div class="row"><label class="col-lg-5 col-form-label text-lg-right">初始 :</label>'
+												+ '<label class="col-lg-6 col-form-label">[' + house.toString() + ']</label></div><br>';
+
 	HouseButtonActive();
 }
 
 function Back() {
 	document.getElementById("gametable").style.display = "none";
+	document.getElementById("info").style.display = "none";
 	document.getElementById("main").style.display = "block";
 }
 
@@ -285,16 +309,4 @@ function modeSelectOnChange() {
 		document.getElementById("player2").disabled = false;
 	else
 		document.getElementById("player2").disabled = true;
-}
-
-function Test2(x) {
-	var z = [x[0]];
-	z[0] = 22;
-	console.log(x);
-	console.log(z);
-}
-
-function Test() {
-	var a = [3];
-	Test2(a);
 }
