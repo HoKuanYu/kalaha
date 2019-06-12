@@ -10,7 +10,6 @@ function HouseButtonActive() {
 	if (firstPlayerTurn) {
 		document.getElementById("title").innerHTML = "輪到" + firstPlayerTitle;
 		for (var i = firstPlayer - 6; i < firstPlayer; ++i) {
-			console.log(i);
 			if (document.getElementById("house" + i.toString()).innerHTML != 0)
 				document.getElementById("house" + i.toString()).disabled = false;
 			else
@@ -21,7 +20,7 @@ function HouseButtonActive() {
 			document.getElementById("house" + i.toString()).disabled = true;
 
 	}
-	else {
+	else if (secondPlayerTurn && !computerTurn) {
 		document.getElementById("title").innerHTML = "輪到" + secondPlayerTitle;
 		for (var i = firstPlayer - 6; i < firstPlayer; ++i) 
 			document.getElementById("house" + i.toString()).disabled = true;
@@ -33,6 +32,19 @@ function HouseButtonActive() {
 				document.getElementById("house" + i.toString()).disabled = true;
 		}
 	}
+	else {
+		document.getElementById("title").innerHTML = "輪到" + secondPlayerTitle;
+
+		for (var i = 0; i < 14; ++i) {
+			if (i != 6 && i != 13)
+				document.getElementById("house" + i.toString()).disabled = true;
+		}
+
+		setTimeout(function() {
+			var action = MinMaxDecision(parseInt(document.getElementById("depth").value));
+			HouseOnClick(action);
+		}, 100);
+	}
 }
 
 function HouseOnClick(pickedHouse) {
@@ -41,8 +53,11 @@ function HouseOnClick(pickedHouse) {
 	for (var i = 0; i < 14; ++i) {
 		house[i] = parseInt(document.getElementById("house" + i.toString()).innerHTML);
 	}
+	console.log(house);
+	console.log(pickedHouse);
 
 	var again = Relocation(house, pickedHouse);
+	console.log(house);
 
 	for (var i = 0; i < 14; ++i) {
 		document.getElementById("house" + i.toString()).innerHTML = house[i];
@@ -53,7 +68,28 @@ function HouseOnClick(pickedHouse) {
 		secondPlayerTurn = !secondPlayerTurn;
 	}
 
-	HouseButtonActive();
+	if (HasSuccessors(house)) {
+		HouseButtonActive();
+	}
+	else {
+		FinalScoring(house);
+		for (var i = 0; i < 14; ++i) {
+			document.getElementById("house" + i.toString()).innerHTML = house[i];
+		}		
+		for (var i = 0; i < 14; ++i) {
+			if (i != 6 && i != 13)
+				document.getElementById("house" + i.toString()).disabled = true;
+		}
+		if (house[secondPlayer] > house[firstPlayer]) {
+			document.getElementById("title").innerHTML = secondPlayerTitle + "獲勝";
+		}
+		else if (house[secondPlayer] == house[firstPlayer]) {
+			document.getElementById("title").innerHTML = "平手";
+		}
+		else {
+			document.getElementById("title").innerHTML = firstPlayerTitle + "獲勝";
+		}
+	}
 }
 
 function Relocation(house, pickedHouse) {
@@ -78,18 +114,26 @@ function Relocation(house, pickedHouse) {
 		return true;
 
 	if (house[index] == 1 && house[12 - index] != 0 && index >= (playerShop - 6) && index < playerShop) {
-		house[index] = 0;
 		house[playerShop] += house[12 - index];
+		house[playerShop] += 1;
+		house[index] = 0;
+		house[12 - index] = 0;
 	}
 
 	return false;
 }
 
-function MinMaxDecision(house, depthMax) {
+function MinMaxDecision(depthMax) {
 	var alpha = -1000;
 	var beta = 1000;
 
-	document.write(MaxValue(house, depthMax, 0, alpha, beta));
+	var house = [];
+
+	for (var i = 0; i < 14; ++i) {
+		house[i] = parseInt(document.getElementById("house" + i.toString()).innerHTML);
+	}
+
+	return MaxValue(house, depthMax, 0, alpha, beta);
 }
 
 function FinalScoring(house) {
@@ -194,6 +238,8 @@ function Start() {
 	for (var i = 0; i < 14; ++i) {
 		if (i != 6 && i != 13)
 			document.getElementById("house" + i.toString()).innerHTML = document.getElementById("seeds").value;
+		else
+			document.getElementById("house" + i.toString()).innerHTML = 0;
 	}
 
 	if (parseInt(document.getElementById("mode").value) === 0) {
@@ -223,11 +269,10 @@ function Start() {
 		secondPlayerTurn = true;
 		computerTurn = true;
 	}
-
-	HouseButtonActive();
-
 	document.getElementById("gametable").style.display = "block";
 	document.getElementById("main").style.display = "none";
+
+	HouseButtonActive();
 }
 
 function Back() {
