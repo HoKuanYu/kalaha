@@ -71,22 +71,22 @@ function HouseOnClick(pickedHouse) {
 	}
 	else {
 		FinalScoring(house);
-		for (var i = 0; i < 14; ++i) {
+
+		for (var i = 0; i < 14; ++i)
 			document.getElementById("house" + i.toString()).innerHTML = house[i];
-		}		
-		for (var i = 0; i < 14; ++i) {
+
+		for (var i = 0; i < 14; ++i)
 			if (i != 6 && i != 13)
 				document.getElementById("house" + i.toString()).disabled = true;
-		}
-		if (house[13] > house[6]) {
+
+		if (house[13] > house[6])
 			document.getElementById("title").innerHTML = playerTitle[1] + "獲勝";
-		}
-		else if (house[13] == house[6]) {
+		else if (house[13] == house[6])
 			document.getElementById("title").innerHTML = "平手";
-		}
-		else {
+		else
 			document.getElementById("title").innerHTML = playerTitle[0] + "獲勝";
-		}
+
+		document.getElementById("back").style.display = "block";
 	}
 }
 
@@ -179,10 +179,10 @@ function Start() {
 	}
 
 	document.getElementById("gametable").style.display = "block";
+	document.getElementById("back").style.display = "none";
 	document.getElementById("main").style.display = "none";
 
 	var house = [];
-
 	for (var i = 0; i < 14; ++i) {
 		house[i] = parseInt(document.getElementById("house" + i.toString()).innerHTML);
 	}
