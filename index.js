@@ -30,7 +30,7 @@ function ActiveComputerHouse(player) {
 	setTimeout(function() {
 		var action = MinMaxDecisionAlphaBetaPurning(playerDepth[player], player);
 		HouseOnClick(action);
-	}, 10);
+	}, 20);
 }
 
 function HouseButtonActive() {
