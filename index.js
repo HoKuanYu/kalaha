@@ -1,6 +1,7 @@
 var playerTitle = [];
 var playerComputer = [];
 var playerDepth = [];
+var playerMethod = [];
 var player;
 
 function ActivePlayerHouse() {
@@ -28,7 +29,11 @@ function ActiveComputerHouse() {
 	}
 
 	setTimeout(function() {
-		var action = MinMaxDecisionAlphaBetaPurning(playerDepth[player], player);
+		var action;
+		if (playerMethod[player] == 0)
+			action = MinMaxDecisionAlphaBetaPurning(playerDepth[player], player);
+		else
+			action = MinMaxDecisionNormal(playerDepth[player], player);
 		HouseOnClick(action);
 	}, 20);
 }
@@ -159,6 +164,8 @@ function Start() {
 	playerTitle[1] = document.getElementById("player2").value;
 	playerDepth[0] = parseInt(document.getElementById("depth1").value);
 	playerDepth[1] = parseInt(document.getElementById("depth2").value);
+	playerMethod[0] = parseInt(document.getElementById("method1").value);
+	playerMethod[1] = parseInt(document.getElementById("method2").value);
 	player = 0;
 
 	if (parseInt(document.getElementById("mode").value) === 0) {
@@ -205,17 +212,25 @@ function modeSelectOnChange() {
 	if (document.getElementById("mode").value == 0) {
 		document.getElementById("depth1").disabled = true;
 		document.getElementById("depth2").disabled = true;
+		document.getElementById("method1").disabled = true;
+		document.getElementById("method2").disabled = true;
 	}
 	else if (document.getElementById("mode").value == 1) {
 		document.getElementById("depth1").disabled = true;
 		document.getElementById("depth2").disabled = false;
+		document.getElementById("method1").disabled = true;
+		document.getElementById("method2").disabled = false;
 	}
 	else if (document.getElementById("mode").value == 2) {
 		document.getElementById("depth1").disabled = false;
 		document.getElementById("depth2").disabled = true;
+		document.getElementById("method1").disabled = false;
+		document.getElementById("method2").disabled = true;
 	}
 	else {
 		document.getElementById("depth1").disabled = false;
 		document.getElementById("depth2").disabled = false;
+		document.getElementById("method1").disabled = false;
+		document.getElementById("method2").disabled = false;
 	}
 }

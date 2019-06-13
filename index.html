@@ -3,6 +3,7 @@
 	<head>
 		<title>Kalaha</title>
 	</head>
+	<script type="text/javascript" src="minMaxNormal.js"></script>
 	<script type="text/javascript" src="minMaxAlphaBetaPurning.js"></script>
 	<script type="text/javascript" src="index.js"></script>
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
@@ -93,6 +94,28 @@
 
 									<div class="col-lg-6 input-group">
 										<input id="player2" class="col-lg-10" type="text" value="玩家2" style="text-align-last: center;">
+									</div>
+								</div><br>
+
+								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">方法1 :</label>
+
+									<div class="col-lg-6 input-group">
+										<select id="method1" onClick="modeSelectOnChange()" class="col-lg-10" style="text-align-last: center;" disabled="disabled">
+											<option value="0">Alpha Beta Pruning</option>
+											<option value="1">Normal</option>
+										</select>
+									</div>
+								</div><br>
+
+								<div class="row">
+									<label class="col-lg-4 col-form-label text-lg-right">方法2 :</label>
+
+									<div class="col-lg-6 input-group">
+										<select id="method2" onClick="modeSelectOnChange()" class="col-lg-10" style="text-align-last: center;" disabled="disabled">
+											<option value="0">Alpha Beta Pruning</option>
+											<option value="1">Normal</option>
+										</select>
 									</div>
 								</div><br>
 
