@@ -3,7 +3,7 @@ var playerComputer = [];
 var playerDepth = [];
 var player;
 
-function ActivePlayerHouse(player) {
+function ActivePlayerHouse() {
 	var playerShop = 6, opponentShop = 13;
 	if (player == 1) {
 		playerShop = 13;
@@ -21,7 +21,7 @@ function ActivePlayerHouse(player) {
 		document.getElementById("house" + i.toString()).disabled = true;
 }
 
-function ActiveComputerHouse(player) {
+function ActiveComputerHouse() {
 	for (var i = 0; i < 14; ++i) {
 		if (i != 6 && i != 13)
 			document.getElementById("house" + i.toString()).disabled = true;
@@ -37,9 +37,9 @@ function HouseButtonActive() {
 	document.getElementById("title").innerHTML = "輪到" + playerTitle[player];
 
 	if (playerComputer[player])
-		ActiveComputerHouse(player);
+		ActiveComputerHouse();
 	else
-		ActivePlayerHouse(player);
+		ActivePlayerHouse();
 }
 
 function HouseOnClick(pickedHouse) {
