@@ -93,6 +93,9 @@ function HouseOnClick(pickedHouse) {
 
 		document.getElementById("back").style.display = "block";
 	}
+
+	var infobox = document.getElementById("infobox");
+	infobox.scrollTop = infobox.scrollHeight;
 }
 
 function Relocation(house, pickedHouse) {
