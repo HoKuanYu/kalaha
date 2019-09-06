@@ -7,4 +7,4 @@ they are the same code, but the html version has perfect UI, and with additional
 
 "alpha-beta prooning" is the normal feature in both program 
 
-made by Hao-Yu Wang and Chu-Yu Huang and me.
+made by Hao-Yu Wang, Chu-Yu Huang and me.
