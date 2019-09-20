@@ -7,4 +7,4 @@ they are the same code, but the web version designed by bootstrap has user-frien
 
 "alpha-beta prooning" is the normal feature in both program 
 
-made by Hao-Yu Wang, Chu-Yu Huang and me.
+made by Hao-Yu Wang, Chu-Yu Huang and Kuan-Yu.
